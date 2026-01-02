@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Türkiye'nin tüm illeri için anlık hava durumu bilgisi. Bölgelere göre kategorize edilmiş hava durumu verileri.">
+    <title>Türkiye Hava Durumu | Tüm İller ve Bölgeler</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Header with Location Widget -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" />
+                        <path
+                            d="M12 2V4M12 20V22M2 12H4M20 12H22M4.93 4.93L6.34 6.34M17.66 17.66L19.07 19.07M4.93 19.07L6.34 17.66M17.66 6.34L19.07 4.93"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <h1>Türkiye Hava Durumu</h1>
+            </div>
+            <p class="subtitle">81 İl • 7 Bölge • Anlık Veriler</p>
+        </div>
+    </header>
+
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <div class="search-box">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2" />
+                <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            <input type="text" id="searchInput" placeholder="İl ara..." autocomplete="off">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+    <!-- Current Location Weather - Fixed Position -->
+    <div class="current-location-weather" id="currentLocationWeather">
+        <div class="location-loading">
+            <div class="spinner"></div>
+            <span>Konumunuz alınıyor...</span>
+        </div>
+    </div>
+
+
+    <!-- Region Tabs -->
+    <div class="region-tabs-container">
+        <div class="region-tabs" id="regionTabs">
+            <button class="region-tab active" data-region="all">
+                <span class="tab-icon">🇹🇷</span>
+                <span class="tab-text">Tümü</span>
+            </button>
+            <button class="region-tab" data-region="marmara">
+                <span class="tab-icon">🌊</span>
+                <span class="tab-text">Marmara</span>
+            </button>
+            <button class="region-tab" data-region="ege">
+                <span class="tab-icon">🏖️</span>
+                <span class="tab-text">Ege</span>
+            </button>
+            <button class="region-tab" data-region="akdeniz">
+                <span class="tab-icon">☀️</span>
+                <span class="tab-text">Akdeniz</span>
+            </button>
+            <button class="region-tab" data-region="karadeniz">
+                <span class="tab-icon">🌧️</span>
+                <span class="tab-text">Karadeniz</span>
+            </button>
+            <button class="region-tab" data-region="ic-anadolu">
+                <span class="tab-icon">🏔️</span>
+                <span class="tab-text">İç Anadolu</span>
+            </button>
+            <button class="region-tab" data-region="dogu-anadolu">
+                <span class="tab-icon">❄️</span>
+                <span class="tab-text">Doğu Anadolu</span>
+            </button>
+            <button class="region-tab" data-region="guneydogu-anadolu">
+                <span class="tab-icon">🌵</span>
+                <span class="tab-text">Güneydoğu Anadolu</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="cities-grid" id="citiesGrid">
+            <!-- Cities will be loaded here -->
+        </div>
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-content">
+                <div class="weather-loader">
+                    <div class="cloud">
+                        <div class="cloud-part"></div>
+                        <div class="cloud-part"></div>
+                        <div class="cloud-part"></div>
+                    </div>
+                    <div class="rain">
+                        <div class="drop"></div>
+                        <div class="drop"></div>
+                        <div class="drop"></div>
+                    </div>
+                </div>
+                <p>Hava durumu verileri yükleniyor...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- City Detail Modal -->
+    <div class="modal" id="cityModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </button>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Veriler <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo API</a> tarafından
+            sağlanmaktadır.</p>
+        <p class="footer-note">Son güncelleme: <span id="lastUpdate">--</span></p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
